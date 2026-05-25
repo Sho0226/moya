@@ -71,7 +71,7 @@ export function ChatView({ session, messages, loading, onBack, onSend, onClose }
       {isClosed && session.summary && (
         <div className={styles.summaryWrap}>
           <p className={styles.summaryLabel}>あなたが持っていた前提</p>
-          <div className={styles.summaryContent}>{session.summary}</div>
+          <div className={styles.summaryContent}>{session.summary.replace(/\*\*/g, "")}</div>
         </div>
       )}
 
