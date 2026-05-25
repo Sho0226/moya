@@ -30,6 +30,12 @@ function initTables(PDO $db): void {
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             closed_at TIMESTAMP
         );
+        CREATE TABLE IF NOT EXISTS roadmaps (
+            id SERIAL PRIMARY KEY,
+            type TEXT NOT NULL,
+            content TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
         CREATE TABLE IF NOT EXISTS daily_reports (
             id SERIAL PRIMARY KEY,
             progress TEXT NOT NULL,

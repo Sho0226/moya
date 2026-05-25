@@ -33,6 +33,7 @@ require_once __DIR__ . '/src/database.php';
 require_once __DIR__ . '/src/claude.php';
 require_once __DIR__ . '/src/sessions.php';
 require_once __DIR__ . '/src/daily_reports.php';
+require_once __DIR__ . '/src/roadmaps.php';
 
 try {
     $db     = getDb();
@@ -48,6 +49,8 @@ try {
         routeSessions($db, $method, $parts, $apiKey);
     } elseif ($resource === 'reports') {
         routeReports($db, $method, $parts, $apiKey);
+    } elseif ($resource === 'roadmaps') {
+        routeRoadmaps($db, $method, $parts, $apiKey);
     } else {
         http_response_code(404);
         echo json_encode(['error' => 'Not found']);

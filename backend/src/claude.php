@@ -99,10 +99,40 @@ define('DAILY_REPORT_SYSTEM', <<<'PROMPT'
 - 日本語で、2〜3文
 PROMPT);
 
-function callClaude(string $apiKey, array $messages, string $system): string {
+define('ROADMAP_MOYA_SYSTEM', <<<'PROMPT'
+あなたはダブルループ学習の専門コーチです。
+以下はユーザーのモヤモヤ掘り下げセッションの記録です（日付順）。
+
+この記録から、ユーザーの心境・内面の変化の軌跡を時系列タイムラインとして生成してください。
+転職を振り返る際に「あの時はこういう心境だった」と一目でわかることが目的です。
+
+以下のJSON形式のみを出力してください。コードブロック（```）や説明文は絶対に含めないこと。
+
+{"summary":"最初と今でどう内面が変わったかを2文で","timeline":[{"period":"YYYY年M月","title":"この時期の心境を15文字以内で","detail":"何に悩み、何に気づき、内面がどう動いたかを2〜3文で","type":"insight または turning_point または struggle"}]}
+
+typeの意味：insight=前提への気づき、turning_point=大きな内面の転換、struggle=まだ抱えている葛藤
+記録が複数ある場合は時系列でまとめ、期間ごとにグループ化してよい。
+PROMPT);
+
+define('ROADMAP_REPORT_SYSTEM', <<<'PROMPT'
+あなたはキャリアコーチです。
+以下はユーザーの日報記録です（日付順）。
+
+この記録から、ユーザーの学び・成長・キャリアの変化の軌跡を時系列タイムラインとして生成してください。
+転職を振り返る際に「あの時はこれを学んでいた」「あの時はこの課題と戦っていた」と一目でわかることが目的です。
+
+以下のJSON形式のみを出力してください。コードブロック（```）や説明文は絶対に含めないこと。
+
+{"summary":"全体的な学びと成長の変化を2文で","timeline":[{"period":"YYYY年M月","title":"この時期の学び・テーマを15文字以内で","detail":"何を学び、どんな課題と向き合い、どう変化したかを2〜3文で","type":"learning または milestone または challenge"}]}
+
+typeの意味：learning=学んだこと・気づき、milestone=達成・突破口、challenge=FightポイントとなるTransformする課題
+記録の期間ごとにグループ化してまとめる。
+PROMPT);
+
+function callClaude(string $apiKey, array $messages, string $system, int $maxTokens = 1024): string {
     $payload = json_encode([
         'model' => 'claude-sonnet-4-6',
-        'max_tokens' => 1024,
+        'max_tokens' => $maxTokens,
         'system' => $system,
         'messages' => $messages,
     ]);

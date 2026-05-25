@@ -1,4 +1,4 @@
-export type Page = "new" | "insights" | "history" | "chat" | "report";
+export type Page = "new" | "insights" | "history" | "chat" | "report" | "roadmap";
 
 export type Session = {
   id: number;
@@ -6,6 +6,15 @@ export type Session = {
   summary: string | null;
   created_at: string;
   closed_at: string | null;
+};
+
+export type RoadmapType = "moya" | "report";
+
+export type Roadmap = {
+  id: number;
+  type: RoadmapType;
+  content: string;
+  created_at: string;
 };
 
 export type DailyReport = {

@@ -587,6 +587,247 @@
   padding-left: 12px;
 }
 
+/* ── Roadmap page ── */
+.roadmapTabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.roadmapTab {
+  padding: 8px 20px;
+  border-radius: 99px;
+  border: 1px solid var(--border);
+  background: none;
+  font: inherit;
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.roadmapTab:hover { border-color: var(--accent); color: var(--accent); }
+
+.roadmapTabActive {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 500;
+}
+
+.roadmapTabActive:hover { background: var(--accent); color: #fff; }
+
+.roadmapDesc {
+  font-size: 13px;
+  color: var(--text);
+  margin: 0 0 28px;
+}
+
+.roadmapMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.roadmapRegenBtn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 6px 16px;
+  font: inherit;
+  font-size: 12px;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.roadmapRegenBtn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.roadmapRegenBtn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.roadmapContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.roadmapSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.roadmapSectionHeading {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 0;
+  letter-spacing: 0.3px;
+}
+
+.roadmapSectionBody {
+  font-size: 15px;
+  color: var(--text-h);
+  line-height: 1.85;
+  margin: 0;
+  white-space: pre-wrap;
+  border-left: 2px solid var(--accent-border);
+  padding-left: 14px;
+}
+
+.roadmapEmpty {
+  padding: 60px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.roadmapEmpty p {
+  font-size: 15px;
+  color: var(--text);
+  margin: 0;
+}
+
+.roadmapSummary {
+  font-size: 15px;
+  color: var(--text-h);
+  line-height: 1.8;
+  margin: 0 0 36px;
+  padding: 16px 20px;
+  background: var(--accent-bg);
+  border-radius: 8px;
+}
+
+/* ── Timeline ── */
+.timeline {
+  position: relative;
+  padding-left: 28px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: var(--border);
+  border-radius: 1px;
+}
+
+.timelineEntry {
+  position: relative;
+  margin-bottom: 28px;
+}
+
+.timelineEntry:last-child {
+  margin-bottom: 0;
+}
+
+.timelineDot {
+  position: absolute;
+  left: -24px;
+  top: 7px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+  box-shadow: 0 0 0 2px var(--accent);
+  flex-shrink: 0;
+}
+
+/* turning_point / milestone はより目立つドット */
+.tl_turning_point .timelineDot,
+.tl_milestone .timelineDot {
+  width: 14px;
+  height: 14px;
+  left: -25px;
+  top: 5px;
+  background: #f59e0b;
+  box-shadow: 0 0 0 2px #f59e0b;
+}
+
+/* struggle / challenge は控えめ */
+.tl_struggle .timelineDot,
+.tl_challenge .timelineDot {
+  background: var(--text);
+  opacity: 0.4;
+  box-shadow: 0 0 0 2px var(--text);
+}
+
+.timelineCard {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--bg);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.timelineCard:hover {
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.tl_turning_point .timelineCard,
+.tl_milestone .timelineCard {
+  border-left: 3px solid #f59e0b;
+}
+
+.timelineCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.timelinePeriod {
+  font-size: 11px;
+  color: var(--text);
+  opacity: 0.7;
+  font-weight: 600;
+}
+
+.timelineTag {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.tag_turning_point,
+.tag_milestone {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.tag_struggle,
+.tag_challenge {
+  background: var(--code-bg);
+  color: var(--text);
+}
+
+.timelineTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-h);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.timelineDetail {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.75;
+  margin: 0;
+}
+
 /* responsive */
 @media (max-width: 640px) {
   .appHeader { padding: 0 20px; gap: 16px; }
