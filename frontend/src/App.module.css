@@ -163,19 +163,22 @@
 }
 
 .logItem {
+  border: 1px solid var(--border);
   border-left: 3px solid var(--accent-border);
-  padding: 12px 18px;
+  padding: 14px 18px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  transition: border-color 0.2s, background 0.15s;
-  border-radius: 0 6px 6px 0;
+  transition: border-color 0.2s, background 0.15s, box-shadow 0.15s;
+  border-radius: 8px;
 }
 
 .logItem:hover {
+  border-color: var(--accent);
   border-left-color: var(--accent);
   background: var(--accent-bg);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
 .logHeader {
@@ -215,19 +218,18 @@
 .insightItem {
   font-size: 14px;
   color: var(--text-h);
-  padding-left: 16px;
-  position: relative;
   line-height: 1.65;
+  display: flex;
+  gap: 6px;
 }
 
 .insightItem::before {
   content: '·';
-  position: absolute;
-  left: 0;
   color: var(--accent);
-  font-size: 20px;
-  line-height: 1.2;
+  font-size: 14px;
+  line-height: 1.65;
   font-weight: 700;
+  flex-shrink: 0;
 }
 
 /* history list */
@@ -237,6 +239,7 @@
   margin: 0;
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
 .historyItem {
@@ -244,14 +247,18 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 14px 0;
+  padding: 14px 18px;
   cursor: pointer;
-  border-bottom: 1px solid var(--border);
-  transition: opacity 0.15s;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
 }
 
-.historyItem:last-child { border-bottom: none; }
-.historyItem:hover { opacity: 0.65; }
+.historyItem:hover {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
 
 .historyMoya {
   font-size: 15px;

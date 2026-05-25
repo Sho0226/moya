@@ -110,7 +110,7 @@ export default function App() {
               <ul className={styles.logList}>
                 {completed.map((session) => {
                   const insights = session.summary
-                    ? session.summary.split("\n").map((l) => l.replace(/^[•\-・]\s*/, "").trim()).filter(Boolean)
+                    ? session.summary.split("\n").map((l) => l.replace(/^[•\-・]\s*/, "").replace(/\*\*/g, "").trim()).filter(Boolean)
                     : [];
                   return (
                     <li key={session.id} className={styles.logItem} onClick={() => { chat.open(session); setPage("chat"); }}>
