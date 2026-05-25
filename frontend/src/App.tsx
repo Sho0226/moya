@@ -1,6 +1,7 @@
 import { useState, type FormEvent, type KeyboardEvent, type ChangeEvent } from "react";
 import styles from "./App.module.css";
 import { ChatView } from "./components/ChatView";
+import { ReportPage } from "./components/ReportPage";
 import { useSessions } from "./hooks/useSessions";
 import { useChat } from "./hooks/useChat";
 import type { Page } from "./types";
@@ -73,6 +74,7 @@ export default function App() {
           <button className={`${styles.navBtn} ${page === "new"      ? styles.navActive : ""}`} onClick={() => navigate("new")}>記録する</button>
           <button className={`${styles.navBtn} ${page === "insights" ? styles.navActive : ""}`} onClick={() => navigate("insights")}>気づきの記録</button>
           <button className={`${styles.navBtn} ${page === "history"  ? styles.navActive : ""}`} onClick={() => navigate("history")}>履歴</button>
+          <button className={`${styles.navBtn} ${page === "report"   ? styles.navActive : ""}`} onClick={() => navigate("report")}>日報</button>
         </nav>
       </header>
 
@@ -155,6 +157,8 @@ export default function App() {
             )}
           </div>
         )}
+
+        {page === "report" && <ReportPage />}
 
       </main>
     </div>

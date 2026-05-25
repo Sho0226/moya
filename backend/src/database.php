@@ -30,6 +30,15 @@ function initTables(PDO $db): void {
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             closed_at TIMESTAMP
         );
+        CREATE TABLE IF NOT EXISTS daily_reports (
+            id SERIAL PRIMARY KEY,
+            progress TEXT NOT NULL,
+            improvements TEXT NOT NULL,
+            tomorrow TEXT NOT NULL,
+            ai_feedback TEXT,
+            report_date DATE DEFAULT CURRENT_DATE,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
         CREATE TABLE IF NOT EXISTS messages (
             id SERIAL PRIMARY KEY,
             session_id INTEGER REFERENCES sessions(id) ON DELETE CASCADE,

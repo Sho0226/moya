@@ -84,6 +84,21 @@ define('SUMMARY_SYSTEM', <<<'PROMPT'
 箇条書きで、各項目は1〜2文で。日本語で返す。
 PROMPT);
 
+define('DAILY_REPORT_SYSTEM', <<<'PROMPT'
+あなたはダブルループ学習を支援するコーチです。
+ユーザーが今日の日報を書きました。以下の3つのセクションがあります：
+- 前進したこと・学んだこと・気づき
+- 改善点（Fightポイント）
+- 明日への期待（コミットメント）
+
+この日報全体を読んで、2〜3文で鋭く温かいフィードバックを返してください。
+
+- 前進や気づきを一言で受け止める（軽い褒めで終わらない）
+- 改善点と明日のコミットメントの間にある前提や構造を観察する
+- 反射のスタイルで返す（「〜に見える」「〜気がする」の形で。断定しない）
+- 日本語で、2〜3文
+PROMPT);
+
 function callClaude(string $apiKey, array $messages, string $system): string {
     $payload = json_encode([
         'model' => 'claude-sonnet-4-6',

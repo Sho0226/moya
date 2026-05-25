@@ -32,6 +32,7 @@ if (file_exists($envPath)) {
 require_once __DIR__ . '/src/database.php';
 require_once __DIR__ . '/src/claude.php';
 require_once __DIR__ . '/src/sessions.php';
+require_once __DIR__ . '/src/daily_reports.php';
 
 try {
     $db     = getDb();
@@ -42,7 +43,15 @@ try {
     $parts  = array_values(array_filter(explode('/', trim($uri, '/'))));
     $apiKey = getenv('ANTHROPIC_API_KEY') ?: ($_ENV['ANTHROPIC_API_KEY'] ?? '');
 
-    routeSessions($db, $method, $parts, $apiKey);
+    $resource = $parts[0] ?? null;
+    if ($resource === 'sessions') {
+        routeSessions($db, $method, $parts, $apiKey);
+    } elseif ($resource === 'reports') {
+        routeReports($db, $method, $parts, $apiKey);
+    } else {
+        http_response_code(404);
+        echo json_encode(['error' => 'Not found']);
+    }
 
 } catch (Exception $e) {
     http_response_code(500);
