@@ -593,6 +593,36 @@
   justify-content: space-between;
 }
 
+.filterBar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.filterChip {
+  padding: 5px 14px;
+  border-radius: 99px;
+  border: 1px solid var(--border);
+  background: none;
+  font: inherit;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.filterChip:hover { border-color: var(--accent); color: var(--accent); }
+
+.filterChipActive {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 500;
+}
+
+.filterChipActive:hover { background: var(--accent); color: #fff; }
+
 .deleteBtn {
   background: none;
   border: none;

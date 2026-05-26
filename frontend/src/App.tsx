@@ -1,4 +1,19 @@
 import { useState, type FormEvent, type KeyboardEvent, type ChangeEvent } from "react";
+
+type FilterPeriod = "all" | "thisMonth" | "lastMonth" | "3months";
+const FILTER_LABELS: Record<FilterPeriod, string> = { all: "すべて", thisMonth: "今月", lastMonth: "先月", "3months": "3ヶ月" };
+
+function applyPeriodFilter<T>(items: T[], period: FilterPeriod, getDate: (item: T) => string): T[] {
+  if (period === "all") return items;
+  const now = new Date();
+  return items.filter((item) => {
+    const d = new Date(getDate(item));
+    if (period === "thisMonth") return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+    if (period === "lastMonth") { const m = now.getMonth() === 0 ? 11 : now.getMonth() - 1; const y = now.getMonth() === 0 ? now.getFullYear() - 1 : now.getFullYear(); return d.getFullYear() === y && d.getMonth() === m; }
+    if (period === "3months") return d >= new Date(now.getFullYear(), now.getMonth() - 2, 1);
+    return true;
+  });
+}
 import styles from "./App.module.css";
 import { ChatView } from "./components/ChatView";
 import { ReportPage } from "./components/ReportPage";
@@ -17,6 +32,7 @@ export default function App() {
   const [page, setPage] = useState<Page>("new");
   const [newMoya, setNewMoya] = useState("");
   const [creating, setCreating] = useState(false);
+  const [filterInsights, setFilterInsights] = useState<FilterPeriod>("all");
 
   const { sessions, refresh, deleteSession } = useSessions();
   const chat = useChat();
@@ -105,14 +121,23 @@ export default function App() {
 
         {page === "insights" && (
           <div className={styles.listPage}>
+            <div className={styles.filterBar}>
+              {(Object.keys(FILTER_LABELS) as FilterPeriod[]).map((p) => (
+                <button key={p} className={`${styles.filterChip} ${filterInsights === p ? styles.filterChipActive : ""}`} onClick={() => setFilterInsights(p)}>
+                  {FILTER_LABELS[p]}
+                </button>
+              ))}
+            </div>
             {completed.length === 0 ? (
               <div className={styles.emptyState}>
                 <p>まだ完了したセッションがありません。</p>
                 <p>モヤモヤを掘り下げて「腑に落ちた」を押すと、ここに記録されます。</p>
               </div>
+            ) : applyPeriodFilter(completed, filterInsights, (s) => s.created_at).length === 0 ? (
+              <div className={styles.emptyState}><p>この期間の記録はありません。</p></div>
             ) : (
               <ul className={styles.logList}>
-                {completed.map((session) => {
+                {applyPeriodFilter(completed, filterInsights, (s) => s.created_at).map((session) => {
                   const insights = session.summary
                     ? session.summary.split("\n").map((l) => l.replace(/^[•\-・]\s*/, "").replace(/\*\*/g, "").trim()).filter(Boolean)
                     : [];
