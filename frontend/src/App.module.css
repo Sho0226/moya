@@ -587,6 +587,30 @@
   padding-left: 12px;
 }
 
+.reportItemHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text);
+  opacity: 0.3;
+  font-size: 16px;
+  padding: 0 4px;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: opacity 0.15s, color 0.15s;
+}
+
+.deleteBtn:hover {
+  opacity: 1;
+  color: #e05050;
+}
+
 /* ── Roadmap page ── */
 .roadmapTabs {
   display: flex;

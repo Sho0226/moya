@@ -10,6 +10,8 @@ function routeSessions(PDO $db, string $method, array $parts, string $apiKey): v
         createSession($db, $apiKey);
     } elseif ($method === 'GET' && $sessionId && !$action) {
         getSession($db, $sessionId);
+    } elseif ($method === 'DELETE' && $sessionId && !$action) {
+        deleteSession($db, $sessionId);
     } elseif ($method === 'POST' && $sessionId && $action === 'chat') {
         chatSession($db, $sessionId, $apiKey);
     } elseif ($method === 'POST' && $sessionId && $action === 'close') {
@@ -18,6 +20,17 @@ function routeSessions(PDO $db, string $method, array $parts, string $apiKey): v
         http_response_code(404);
         echo json_encode(['error' => 'Not found']);
     }
+}
+
+function deleteSession(PDO $db, int $sessionId): void {
+    $stmt = $db->prepare("DELETE FROM sessions WHERE id = :id");
+    $stmt->execute([':id' => $sessionId]);
+    if ($stmt->rowCount() === 0) {
+        http_response_code(404);
+        echo json_encode(['error' => 'セッションが見つかりません']);
+        return;
+    }
+    echo json_encode(['ok' => true]);
 }
 
 function listSessions(PDO $db): void {

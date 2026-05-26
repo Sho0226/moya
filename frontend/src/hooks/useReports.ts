@@ -27,7 +27,12 @@ export function useReports() {
     return data;
   };
 
+  const deleteReport = async (id: number) => {
+    await fetch(`${API}/reports/${id}`, { method: "DELETE" });
+    setReports((prev) => prev.filter((r) => r.id !== id));
+  };
+
   useEffect(() => { refresh(); }, []);
 
-  return { reports, submit };
+  return { reports, submit, deleteReport };
 }

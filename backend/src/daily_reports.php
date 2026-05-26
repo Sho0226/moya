@@ -5,10 +5,23 @@ function routeReports(PDO $db, string $method, array $parts, string $apiKey): vo
         listReports($db);
     } elseif ($method === 'POST' && count($parts) === 1) {
         createReport($db, $apiKey);
+    } elseif ($method === 'DELETE' && isset($parts[1])) {
+        deleteReport($db, (int)$parts[1]);
     } else {
         http_response_code(404);
         echo json_encode(['error' => 'Not found']);
     }
+}
+
+function deleteReport(PDO $db, int $reportId): void {
+    $stmt = $db->prepare("DELETE FROM daily_reports WHERE id = :id");
+    $stmt->execute([':id' => $reportId]);
+    if ($stmt->rowCount() === 0) {
+        http_response_code(404);
+        echo json_encode(['error' => '日報が見つかりません']);
+        return;
+    }
+    echo json_encode(['ok' => true]);
 }
 
 function listReports(PDO $db): void {

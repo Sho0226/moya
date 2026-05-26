@@ -28,7 +28,7 @@ const FIELDS = [
 ];
 
 export function ReportPage() {
-  const { reports, submit } = useReports();
+  const { reports, submit, deleteReport } = useReports();
   const [values, setValues] = useState({ progress: "", improvements: "", tomorrow: "" });
   const [submitting, setSubmitting] = useState(false);
   const [latest, setLatest] = useState<DailyReport | null>(null);
@@ -84,9 +84,15 @@ export function ReportPage() {
         <ul className={styles.reportList}>
           {past.map((r) => (
             <li key={r.id} className={styles.reportItem}>
-              <time className={styles.reportItemDate}>
-                {new Date(r.report_date).toLocaleDateString("ja-JP", { month: "numeric", day: "numeric", weekday: "short" })}
-              </time>
+              <div className={styles.reportItemHeader}>
+                <time className={styles.reportItemDate}>
+                  {new Date(r.report_date).toLocaleDateString("ja-JP", { month: "numeric", day: "numeric", weekday: "short" })}
+                </time>
+                <button
+                  className={styles.deleteBtn}
+                  onClick={() => { if (window.confirm("この日報を削除しますか？")) deleteReport(r.id); }}
+                >×</button>
+              </div>
               <div className={styles.reportItemSections}>
                 {FIELDS.map(({ key, label }) => (
                   <div key={key} className={styles.reportItemSection}>

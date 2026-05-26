@@ -18,7 +18,7 @@ export default function App() {
   const [newMoya, setNewMoya] = useState("");
   const [creating, setCreating] = useState(false);
 
-  const { sessions, refresh } = useSessions();
+  const { sessions, refresh, deleteSession } = useSessions();
   const chat = useChat();
 
   const navigate = (to: Exclude<Page, "chat">) => {
@@ -123,6 +123,10 @@ export default function App() {
                         <time className={styles.logTime}>
                           {new Date(session.created_at).toLocaleDateString("ja-JP", { month: "numeric", day: "numeric", weekday: "short" })}
                         </time>
+                        <button
+                          className={styles.deleteBtn}
+                          onClick={(e) => { e.stopPropagation(); if (window.confirm("この記録を削除しますか？")) deleteSession(session.id); }}
+                        >×</button>
                       </div>
                       {insights.length > 0 && (
                         <ul className={styles.insightList}>
@@ -153,6 +157,10 @@ export default function App() {
                     <time className={styles.logTime}>
                       {new Date(session.created_at).toLocaleDateString("ja-JP", { month: "numeric", day: "numeric", weekday: "short" })}
                     </time>
+                    <button
+                      className={styles.deleteBtn}
+                      onClick={(e) => { e.stopPropagation(); if (window.confirm("この記録を削除しますか？")) deleteSession(session.id); }}
+                    >×</button>
                   </li>
                 ))}
               </ul>

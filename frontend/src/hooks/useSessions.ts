@@ -12,7 +12,12 @@ export function useSessions() {
     setSessions(data);
   };
 
+  const deleteSession = async (id: number) => {
+    await fetch(`${API}/sessions/${id}`, { method: "DELETE" });
+    setSessions((prev) => prev.filter((s) => s.id !== id));
+  };
+
   useEffect(() => { refresh(); }, []);
 
-  return { sessions, refresh };
+  return { sessions, refresh, deleteSession };
 }
